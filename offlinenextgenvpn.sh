@@ -1,4 +1,3 @@
-
 echo "SET DATETIME and DNS start"
 uci set system.@system[0].zonename='Europe/Moscow'
 uci set system.@system[0].timezone='MSK-3'
@@ -31,6 +30,21 @@ telegram : @NextGenVPN_RU" >> /etc/banner
 
 sleep 1
 echo "SET BANNER end"
+
+
+echo "SET INSTALL PACKAGE STAGE-1 start"
+mkdir /tmp/ngvpack/
+cd /tmp
+wget https://raw.githubusercontent.com/fruitybug/vpn/main/packages.tar.gz
+tar -xvzf /tmp/packages.tar.gz -C /tmp/ngvpack/
+sleep 3
+opkg install /tmp/ngvpack/*.ipk
+echo "SET INSTALL PACKAGE STAGE-1 end"
+sleep 2
+echo "SET INSTALL PACKAGE STAGE-2 start"
+opkg install /tmp/ngvpack/*.ipk
+echo "SET INSTALL PACKAGE STAGE-2 end"
+sleep 3
 
 ####CONFIG
 echo "SET passwall2 config start"
@@ -93,6 +107,13 @@ uci set wireless.default_radio1.network='lan'
 uci commit wireless
 uci commit
 echo "SET WIFI 5G end"
+
+echo "INSTALL WEB ICON OTHER start"
+cd /tmp
+wget https://raw.githubusercontent.com/fruitybug/vpn/main/ngvpn.zip
+unzip -o ngvpn.zip -d /
+echo "INSTALL WEB ICON OTHER end"
+sleep 2
 
 RED='\033[0;31m'
 echo -e "${RED}** ВНИМАНИЕ СЕЙЧАС РОУТЕР ПЕРЕЗАГРУЗИТСЯ Новый IP 192.168.24.1 **"
