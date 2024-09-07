@@ -108,6 +108,9 @@ uci commit wireless
 uci commit
 echo "SET WIFI 5G end"
 
+uci set luci.main.lang='ru'
+uci commit
+
 echo "INSTALL WEB ICON OTHER start"
 cd /tmp
 wget https://raw.githubusercontent.com/fruitybug/vpn/main/ngvpn.zip
